@@ -76,7 +76,7 @@ export default function GeminiForm() {
 
         {answer && (
           <div>
-                <div className="prose prose-sm max-w-none font-serif text-gray-800">
+                <div className="prose prose-sm max-w-none font-serif">
                 <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
                     {answer}
                 </ReactMarkdown>
