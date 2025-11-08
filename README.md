@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Next App
 
-## Getting Started
+Next.js (App Router) application with:
+- Prisma ORM (Postgres)
+- NextAuth for authentication
+- Email verification via Nodemailer
+- Gemini (Generative Language) API integration
+- Deployed to Vercel (recommended)
 
-First, run the development server:
+## Table of contents
+- Overview
+- Requirements
+- Quick start (local)
+- Environment variables
+- Prisma (migrations & generate)
+- Authentication & email verification
+- Gemini API usage
+- Deploy to Vercel
+- Security & notes
+- Useful commands
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
+This project implements user signup/login with email verification, stores users via Prisma + Postgres, and exposes a protected dashboard where authenticated users can send prompts to the Gemini endpoint and see formatted responses.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Key paths:
+- Signup API: `src/app/api/signup/route.ts`
+- Verify API: `src/app/api/verify/route.ts`
+- Auth (NextAuth): `src/app/api/auth/[...nextauth]/route.ts`
+- Gemini API: `src/app/api/gemini/route.ts`
+- Client form: `src/app/api/_components/geminiform.tsx`
+- Dashboard: `src/app/dashboard/page.tsx`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Requirements
+- Node.js (16+ recommended)
+- npm or yarn
+- A Postgres database (Neon, Supabase, Railway, etc.)
+- Vercel account (for deployment)
+- Gmail account with App Password (if using Gmail SMTP)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Quick start (local)
+1. Clone:
+   - git clone <repo>
+   - cd my-next-app
 
-## Learn More
+2. Install dependencies:
+   - npm install
 
-To learn more about Next.js, take a look at the following resources:
+3. Create `.env` in project root (see Environment variables below).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Generate Prisma client:
+   - npx prisma generate
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Run migrations locally (dev):
+   - npx prisma migrate dev --name init
+   - (or for a quick sync) npx prisma db push
 
-## Deploy on Vercel
+6. Start dev server:
+   - npm run dev
+   - Open http://localhost:3000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+(Windows PowerShell example)
+- $env:DATABASE_URL = 'postgresql://...'
+- npx prisma migrate dev --name init
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Environment variables
+Create `.env` (don't commit secrets). Example `.env.example`:
+
+````properties
+DATABASE_URL="postgresql://user:pass@host:5432/dbname?sslmode=require"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="a-very-long-random-string"
+EMAIL_USER="you@example.com"
+EMAIL_PASSWORD="your-app-password"
+GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
+NEXT_PUBLIC_STACK_PROJECT_ID="..."
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY="..."
+STACK_SECRET_SERVER_KEY="..."
+````

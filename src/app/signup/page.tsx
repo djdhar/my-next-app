@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import LoginButton from "../api/_components/loginbutton"
 
 export default function SignupPage() {
   const router = useRouter()
@@ -23,6 +24,7 @@ export default function SignupPage() {
   }
 
   return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
     <form onSubmit={handleSubmit} className="max-w-sm mx-auto mt-10">
       <input
         type="text"
@@ -50,5 +52,8 @@ export default function SignupPage() {
       </button>
       {error && <p className="text-red-500 mt-2">{error}</p>}
     </form>
+    <p className="pt-5">Or</p>
+    <LoginButton/>
+    </div>
   )
 }
