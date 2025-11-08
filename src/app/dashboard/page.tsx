@@ -9,7 +9,7 @@ export default async function DashboardPage() {
   if (!session) redirect("/login")
 
   return (
-  <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+  <div className="min-h-screen flex flex-col items-center justify-center">
     <div className="p-6">Welcome {session.user?.email} 👋</div>
     <GeminiForm/>
     <p className="pt-5">Or</p>

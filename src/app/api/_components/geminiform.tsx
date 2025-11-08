@@ -44,7 +44,7 @@ export default function GeminiForm() {
   }
 
   return (
-    <div className="w-full max-w-2xl p-6 bg-white rounded shadow">
+    <div className="w-full max-w-2xl p-6 rounded shadow">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="font-medium">Ask AI</label>
         <textarea
